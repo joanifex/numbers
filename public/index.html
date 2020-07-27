@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Factors</title>
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="./style.css" />
+
+    <!-- import the webpage's javascript file -->
+    <script src="https://d3js.org/d3.v5.js"></script>
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <div>
+      <button id="decrement" disabled>
+        -
+      </button>
+      <button id="increment">
+        +
+      </button>
+
+      <span id="number"></span>
+    </div>
+    <div>
+      <button id="previous" disabled>
+        previous
+      </button>
+      <button id="next" disabled>
+        next
+      </button>
+      <span id="factors"></span>
+    </div>
+
+    <div id="where-the-magic-happens"></div>
+  </body>
+</html>
