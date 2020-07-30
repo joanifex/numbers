@@ -1,3 +1,13 @@
+const range = n => [...Array(n).keys()];
+const percent = decimal => `${Math.floor(decimal * 100)}%`;
+
+let data;
+let number;
+let factors;
+let factorIndex;
+let nodes;
+let svg;
+
 const [
   numberSpan,
   incrementButton,
@@ -14,17 +24,10 @@ const [
   "factors",
 ].map(id => document.querySelector(`#${id}`));
 
-const range = n => [...Array(n).keys()];
-
-let number;
-let factors;
-let factorIndex;
-let svg;
-
 function initialize(update, render) {
   number = 1;
-  factors = [[1, 1]];
   factorIndex = 0;
+  update();
 
   svg = d3.select("svg");
 
@@ -66,68 +69,12 @@ function initialize(update, render) {
 }
 
 function update() {
-  if (number === 1) {
-    factors = [[1, 1]];
+  console.log(data);
+  if (factorIndex > Object.keys(data[`${number}`]).length - 1) {
+    factorIndex = Object.keys(data[`${number}`]).length;
   }
-  if (number === 2) {
-    factors = [
-      [1, 2],
-      [2, 1],
-    ];
-  }
-  if (number === 3) {
-    factors = [
-      [1, 3],
-      [3, 1],
-    ];
-  }
-  if (number === 4) {
-    factors = [
-      [1, 4],
-      [2, 2],
-      [4, 1],
-    ];
-  }
-  if (number === 5) {
-    factors = [
-      [1, 5],
-      [5, 1],
-    ];
-  }
-  if (number === 6) {
-    factors = [
-      [1, 6],
-      [2, 3],
-      [3, 2],
-      [6, 1],
-    ];
-  }
-  if (number === 7) {
-    factors = [
-      [1, 7],
-      [7, 1],
-    ];
-  }
-  if (number === 8) {
-    factors = [
-      [1, 8],
-      [2, 4],
-      [4, 2],
-      [8, 1],
-    ];
-  }
-  if (number === 9) {
-    factors = [
-      [1, 9],
-      [3, 3],
-      [9, 1],
-    ];
-  }
-  // 8: [[1,8], [2, 4], [2, [2, 2]]]
-
-  if (factorIndex > factors.length - 1) {
-    factorIndex = factors.length - 1;
-  }
+  factors = Object.keys(data[`${number}`])[factorIndex];
+  nodes = data[`${number}`][factors];
 }
 
 function render() {
@@ -137,7 +84,7 @@ function render() {
     decrementButton.removeAttribute("disabled");
   }
 
-  if (factors.length && factorIndex < factors.length - 1) {
+  if (factorIndex < Object.keys(data[`${number}`]).length - 1) {
     nextButton.removeAttribute("disabled");
   } else {
     nextButton.setAttribute("disabled", true);
@@ -150,12 +97,50 @@ function render() {
   }
 
   numberSpan.innerText = number.toString();
-  factorsSpan.innerText = factors[factorIndex];
+  factorsSpan.innerText = factors;
+
+  const t = svg.transition().duration(750);
 
   svg
     .selectAll("rect")
-    .data(factors)
-    .join(enter => enter.append("rect"));
+    .data(nodes, d => d.position)
+    .join(
+      enter =>
+        enter
+          .append("rect")
+          .attr("y", _ => 0)
+          .attr("x", _ => 0)
+          .call(enter =>
+            enter
+              .transition(t)
+              .attr("y", data => data.column)
+              .attr("x", data => data.row)
+          ),
+      update =>
+        update.call(update =>
+          update
+            .transition(t)
+            .attr("y", data => data.column)
+            .attr("x", data => data.row)
+        ),
+      exit =>
+        exit.call(exit =>
+          exit
+            .transition(t)
+            .attr("y", _ => 0)
+            .attr("x", _ => 0)
+            .remove()
+        )
+    )
+    .attr("fill", "black")
+    .attr("height", _ => "1%")
+    .attr("width", _ => "1%");
 }
 
-initialize(update, render);
+fetch("data.json")
+  .then(response => response.json())
+  .then(responseData => {
+    data = responseData;
+    console.log(data);
+    initialize(update, render);
+  });

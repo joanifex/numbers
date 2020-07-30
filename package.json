@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "http-server public/index.html",
+    "start": "http-server",
     "prettier": "prettier ."
   },
   "author": "",
