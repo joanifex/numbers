@@ -101,6 +101,9 @@ function render() {
 
   const t = svg.transition().duration(750);
 
+  const scale = (Math.floor(number / 10) + 1) * 10;
+  svg.transition(t).attr("viewBox", _ => `0 0 ${scale} ${scale}`);
+
   svg
     .selectAll("rect")
     .data(nodes, d => d.position)
