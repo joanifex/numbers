@@ -118,6 +118,8 @@ function render() {
               .transition(t)
               .attr("y", data => data.column)
               .attr("x", data => data.row)
+              .attr("height", _ => `${100 / scale}%`)
+              .attr("width", _ => `${100 / scale}%`)
           ),
       update =>
         update.call(update =>
@@ -125,6 +127,8 @@ function render() {
             .transition(t)
             .attr("y", data => data.column)
             .attr("x", data => data.row)
+            .attr("height", _ => `${100 / scale}%`)
+            .attr("width", _ => `${100 / scale}%`)
         ),
       exit =>
         exit.call(exit =>
@@ -135,9 +139,7 @@ function render() {
             .remove()
         )
     )
-    .attr("fill", "black")
-    .attr("height", _ => "1%")
-    .attr("width", _ => "1%");
+    .attr("fill", "black");
 }
 
 fetch("data.json")
