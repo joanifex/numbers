@@ -1,12 +1,13 @@
-const range = n => [...Array(n).keys()];
-const percent = decimal => `${Math.floor(decimal * 100)}%`;
-
 let data;
-let number;
 let factors;
 let factorIndex;
 let nodes;
+let number;
 let svg;
+
+const getFactorPairs = () => Object.keys(data[number.toString()]);
+const percent = decimal => `${Math.floor(decimal * 100)}%`;
+const range = n => [...Array(n).keys()];
 
 const [
   numberSpan,
@@ -25,33 +26,16 @@ const [
 ].map(id => document.querySelector(`#${id}`));
 
 function initialize(update, render) {
-  number = 1;
   factorIndex = 0;
-  update();
-
+  number = 1;
   svg = d3.select("svg");
 
-  const increment = () => {
-    if (number < 100) {
-      number = number + 1;
-    }
-  };
-  const decrement = () => {
-    if (number > 1) {
-      number = number - 1;
-    }
-  };
-  const next = () => {
-    const factorPairs = Object.keys(data[number.toString()]);
-    if (factorIndex < factorPairs.length - 1) {
-      factorIndex = factorIndex + 1;
-    }
-  };
-  const previous = () => {
-    if (factorIndex > 0) {
-      factorIndex = factorIndex - 1;
-    }
-  };
+  update();
+
+  const increment = () => number < 100 && number++;
+  const decrement = () => number > 1 && number--;
+  const next = () => factorIndex < getFactorPairs().length - 1 && factorIndex++;
+  const previous = () => factorIndex > 0 && factorIndex--;
 
   const react = operate => {
     operate();
@@ -84,13 +68,13 @@ function initialize(update, render) {
 }
 
 function update() {
-  const factorPairs = Object.keys(data[number.toString()]);
+  const factorPairs = getFactorPairs();
 
   if (factorIndex > factorPairs.length - 1) {
     factorIndex = factorPairs.length - 1;
   }
   factors = factorPairs[factorIndex];
-  nodes = data[`${number}`][factors];
+  nodes = data[number.toString()][factors];
 }
 
 function render() {
@@ -100,7 +84,7 @@ function render() {
     decrementButton.removeAttribute("disabled");
   }
 
-  if (factorIndex < Object.keys(data[`${number}`]).length - 1) {
+  if (factorIndex < getFactorPairs().length - 1) {
     nextButton.removeAttribute("disabled");
   } else {
     nextButton.setAttribute("disabled", true);
@@ -112,7 +96,7 @@ function render() {
     previousButton.setAttribute("disabled", true);
   }
 
-  numberSpan.innerText = number.toString();
+  numberSpan.innerText = number;
   factorsSpan.innerText = factors;
 
   const t = svg.transition().duration(750);
