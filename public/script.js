@@ -42,7 +42,8 @@ function initialize(update, render) {
     }
   };
   const next = () => {
-    if (factorIndex < factors.length - 1) {
+    const factorPairs = Object.keys(data[number.toString()]);
+    if (factorIndex < factorPairs.length - 1) {
       factorIndex = factorIndex + 1;
     }
   };
@@ -66,6 +67,18 @@ function initialize(update, render) {
   ].forEach(([button, operation]) =>
     button.addEventListener("click", () => react(operation))
   );
+
+  document.addEventListener("keydown", ({ code }) => {
+    if (code === "ArrowRight") {
+      nextButton.click();
+    } else if (code === "ArrowLeft") {
+      previousButton.click();
+    } else if (code === "ArrowUp") {
+      react(increment);
+    } else if (code === "ArrowDown") {
+      react(decrement);
+    }
+  });
 
   render();
 }
@@ -144,6 +157,5 @@ fetch("data.json")
   .then(response => response.json())
   .then(responseData => {
     data = responseData;
-    console.log(data);
     initialize(update, render);
   });
