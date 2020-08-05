@@ -17,15 +17,17 @@
     <script src="./script.js" defer></script>
   </head>
   <body class="factors">
-    <div>
+    <div class="numberButtons">
       <button id="decrement" disabled>
         -
       </button>
+      <span class="number" id="number"></span>
       <button id="increment">
         +
       </button>
-
-      <span id="number"></span>
+    </div>
+    <div class="visualization">
+      <svg viewBox="0 0 100 100"></svg>
     </div>
     <div>
       <button id="previous" disabled>
@@ -36,6 +38,5 @@
       </button>
       <span id="factors"></span>
     </div>
-    <svg class="visualization" viewBox="0 0 100 100"></svg>
   </body>
 </html>
