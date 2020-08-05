@@ -32,7 +32,9 @@ function initialize(update, render) {
   svg = d3.select("svg");
 
   const increment = () => {
-    number = number + 1;
+    if (number < 100) {
+      number = number + 1;
+    }
   };
   const decrement = () => {
     if (number > 1) {
@@ -50,8 +52,8 @@ function initialize(update, render) {
     }
   };
 
-  const react = operation => {
-    operation();
+  const react = operate => {
+    operate();
     update();
     render();
   };
@@ -69,11 +71,12 @@ function initialize(update, render) {
 }
 
 function update() {
-  console.log(data);
-  if (factorIndex > Object.keys(data[`${number}`]).length - 1) {
-    factorIndex = Object.keys(data[`${number}`]).length;
+  const factorPairs = Object.keys(data[number.toString()]);
+
+  if (factorIndex > factorPairs.length - 1) {
+    factorIndex = factorPairs.length - 1;
   }
-  factors = Object.keys(data[`${number}`])[factorIndex];
+  factors = factorPairs[factorIndex];
   nodes = data[`${number}`][factors];
 }
 
