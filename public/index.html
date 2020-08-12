@@ -11,32 +11,40 @@
     <link rel="stylesheet" href="./normalize.css" />
     <link rel="stylesheet" href="./skeleton.css" />
     <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
     <!-- import the webpage's javascript file -->
     <script src="https://d3js.org/d3.v5.js"></script>
     <script src="./script.js" defer></script>
   </head>
-  <body class="factors">
-    <div class="numberButtons">
-      <button id="decrement" disabled>
-        -
-      </button>
-      <span class="number" id="number"></span>
-      <button id="increment">
-        +
-      </button>
-    </div>
-    <div class="visualization">
-      <svg viewBox="0 0 100 100"></svg>
-    </div>
-    <div>
-      <button id="previous" disabled>
-        previous
-      </button>
-      <button id="next" disabled>
-        next
-      </button>
-      <span id="factors"></span>
+  <body>
+    <div class="main">
+      <div class="numberButtons">
+        <button class="button" id="decrement" disabled>
+          <i class="material-icons icon" md-18>remove</i>
+        </button>
+        <h1 class="number" id="number"></h1>
+        <button class="button" id="increment">
+          <i class="material-icons icon" md-18>add</i>
+        </button>
+      </div>
+      <div class="visualization">
+        <svg class="svg" viewBox="0 0 100 100"></svg>
+      </div>
+      <div class="factors">
+        <h2 id="factors" />
+      </div>
+      <div class="factorsButtons">
+        <button class="button" id="previous" disabled>
+          <i class="material-icons icon" md-18>keyboard_arrow_left</i>
+        </button>
+        <button class="button" id="next" disabled>
+          <i class="material-icons icon" md-18>keyboard_arrow_right</i>
+        </button>
+      </div>
     </div>
   </body>
 </html>

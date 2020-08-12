@@ -101,8 +101,7 @@ function render() {
 
   const t = svg.transition().duration(750);
 
-  const scale = (Math.floor(number / 10) + 1) * 10;
-  svg.transition(t).attr("viewBox", _ => `0 0 ${scale} ${scale}`);
+  svg.transition(t).attr("viewBox", _ => `0 0 ${number} ${number}`);
 
   svg
     .selectAll("rect")
@@ -111,35 +110,34 @@ function render() {
       enter =>
         enter
           .append("rect")
-          .attr("y", _ => 0)
-          .attr("x", _ => 0)
+          .attr("y", _ => number + 1)
+          .attr("x", _ => number + 1)
           .call(enter =>
             enter
               .transition(t)
-              .attr("y", data => data.column)
-              .attr("x", data => data.row)
-              .attr("height", _ => `${100 / scale}%`)
-              .attr("width", _ => `${100 / scale}%`)
+              .attr("y", data => data.column + 0.25)
+              .attr("x", data => data.row + 0.25)
           ),
       update =>
         update.call(update =>
           update
             .transition(t)
-            .attr("y", data => data.column)
-            .attr("x", data => data.row)
-            .attr("height", _ => `${100 / scale}%`)
-            .attr("width", _ => `${100 / scale}%`)
+            .attr("y", data => data.column + 0.25)
+            .attr("x", data => data.row + 0.25)
         ),
       exit =>
         exit.call(exit =>
           exit
             .transition(t)
-            .attr("y", _ => 0)
-            .attr("x", _ => 0)
+            .attr("y", _ => number + 1)
+            .attr("x", _ => number + 1)
             .remove()
         )
     )
-    .attr("fill", "black");
+    .attr("fill", "white")
+    .attr("height", _ => "0.5")
+    .attr("width", _ => "0.5")
+    .attr("rx", _ => "0.5");
 }
 
 fetch("data.json")
