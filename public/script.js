@@ -105,7 +105,7 @@ function render() {
   }
 
   numberSpan.innerText = number;
-  factorsSpan.innerText = factors;
+  factorsSpan.innerText = factors.replace(",", " x ");
 
   const t = svg.transition().duration(750);
 
