@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "http-server",
-    "prettier": "prettier ."
+    "prettier": "prettier .",
+    "publish": "aws s3 cp public s3://number-factors --recursive"
   },
   "author": "",
   "license": "ISC",
