@@ -144,7 +144,9 @@ input[type="button"] {
   box-sizing: border-box;
 }
 .button:hover,
+.button:disabled,
 button:hover,
+button[disabled],
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 input[type="button"]:hover,
