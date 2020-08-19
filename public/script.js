@@ -109,8 +109,6 @@ function render() {
 
   const t = svg.transition().duration(750);
 
-  const ease = d3.easeExpOut;
-
   svg.transition(t).attr("viewBox", _ => `0 0 ${number} ${number}`);
 
   svg
@@ -125,7 +123,6 @@ function render() {
           .call(enter =>
             enter
               .transition(t)
-              .ease(ease)
               .attr("y", data => data.column + 0.25)
               .attr("x", data => data.row + 0.25)
           ),
@@ -133,7 +130,6 @@ function render() {
         update.call(update =>
           update
             .transition(t)
-            .ease(ease)
             .attr("y", data => data.column + 0.25)
             .attr("x", data => data.row + 0.25)
         ),
@@ -141,10 +137,8 @@ function render() {
         exit.call(exit =>
           exit
             .transition(t)
-            .ease(ease)
-            .attr("y", _ => number + 1)
-            .attr("x", _ => number + 1)
-            .attr("rx", _ => "0")
+            .attr("y", _ => number + 10)
+            .attr("x", _ => number + 10)
             .remove()
         )
     )
